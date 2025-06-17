@@ -6,7 +6,7 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 const refs = {
-  formEl: document.querySelector('.gallery-form'),
+  formEl: document.querySelector('.form'),
   galleryEl: document.querySelector('.gallery'),
   loaderEl: document.querySelector('.loader'),
   loadMoreEl: document.querySelector('.load-more-btn'),
