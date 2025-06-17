@@ -88,6 +88,8 @@ const loadMoreBtn = async event => {
 
     refs.galleryEl.insertAdjacentHTML('beforeend', galleryCreat);
 
+    galleryLightBox.refresh();
+
     if (data.hits.length < 15) {
       refs.loadMoreEl.classList.add('is-hiden');
       iziToast.info({
