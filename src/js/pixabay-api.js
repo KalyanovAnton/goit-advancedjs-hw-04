@@ -17,7 +17,7 @@ axios.interceptors.response.use(
   }
 );
 
-export const photoApi = (searchedQuery, currentPage) => {
+export const photoApi = async (searchedQuery, currentPage) => {
   const requstParams = {
     key: '50834675-61314f789662a68656002458b',
     q: searchedQuery,
@@ -27,5 +27,10 @@ export const photoApi = (searchedQuery, currentPage) => {
     page: currentPage,
     per_page: 15,
   };
-  return axios.get(`/api/`, { params: requstParams });
+   try {
+    const response = await axios.get('/api/', { params: requstParams });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };

@@ -44,7 +44,23 @@ const toSearchSubmit = async event => {
 
     currentPage = 1;
 
-    const { data } = await photoApi(searchedQuery, currentPage);
+    const data = await photoApi(searchedQuery, currentPage);
+
+    if (data.totalHits > 1) {
+      refs.loadMoreEl.classList.remove('is-hiden');
+      refs.loadMoreEl.addEventListener('click', loadMoreBtn);
+    }
+
+    if (data.hits.length < 15) {
+      refs.loadMoreEl.classList.add('is-hiden');
+      iziToast.info({
+        title: '',
+        message:
+          "We're sorry, but you've reached<br>the end of search results.",
+        position: 'topRight',
+      });
+      refs.loadMoreEl.removeEventListener('click', loadMoreBtn);
+    }
 
     if (data.total === 0) {
       iziToast.error({
@@ -57,10 +73,7 @@ const toSearchSubmit = async event => {
       return;
     }
 
-    if (data.totalHits > 1) {
-      refs.loadMoreEl.classList.remove('is-hiden');
-      refs.loadMoreEl.addEventListener('click', loadMoreBtn);
-    }
+    
 
     const galleryCreat = data.hits
       .map(pictureInfo => creatGalleryCard(pictureInfo))
@@ -80,7 +93,7 @@ const loadMoreBtn = async event => {
   try {
     currentPage++;
 
-    const { data } = await photoApi(searchedQuery, currentPage);
+    const data = await photoApi(searchedQuery, currentPage);
 
     const galleryCreat = data.hits
       .map(pictureInfo => creatGalleryCard(pictureInfo))
